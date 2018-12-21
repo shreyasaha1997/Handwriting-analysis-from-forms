@@ -21,8 +21,9 @@ while r2 <= 1:
     top_right = [cols * 1, rows * r1]
     vertices = np.array([[bottom_left, top_left, top_right, bottom_right]], dtype=np.int32)
     img = filter_region(image, vertices)
-    cv2.imshow('bb',img)
-    cv2.waitKey(0)
+    cv2.imshow('b' + str(r1),img)
+
     r1 = r1 + 0.1
     r2 = r2 + 0.1
+cv2.waitKey(0)
 cv2.destroyAllWindows()
