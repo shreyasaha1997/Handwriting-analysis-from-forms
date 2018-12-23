@@ -1,7 +1,8 @@
 import cv2
 import numpy as np
 
-image = cv2.imread('p2.png')
+image = cv2.imread('p1.png', cv2.IMREAD_GRAYSCALE)
+(thresh, im_bw) = cv2.threshold(image, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 
 def filter_region(image, vertices):
     mask = np.zeros_like(image)
@@ -14,6 +15,8 @@ def filter_region(image, vertices):
 rows, cols = image.shape[:2]
 r1 = 0
 r2 = 0.1
+
+
 while r2 <= 1:
     bottom_left = [cols * 0, rows * r2]
     top_left = [cols * 0, rows * r1]
