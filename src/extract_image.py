@@ -3,6 +3,7 @@ import numpy as np
 
 image = cv2.imread('Forms/F4.jpg')
 # image = cv2.resize(image,(800,800))
+img = cv2.resize(img, None, fx = 5, fy = 5, interpolation = cv2.INTER_CUBIC);
 cv2.imshow('main',image)
 def line_sep(image):
     gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
