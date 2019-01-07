@@ -36,10 +36,10 @@ class DataLoader:
 		self.imgSize = imgSize
 		self.samples = []
 
-		uppercase_characters = 'data/hsf_0/upper/'
-		lowercase_characters = 'data/hsf_0/lower/'
+		uppercase_characters = '../data/hsf_0/upper/'
+		lowercase_characters = '../data/hsf_0/lower/'
 		chars = set()
-		numbers = 'data/hsf_0/digit/'
+		numbers = '../data/hsf_0/digit/'
 
 		for folders in range(1, 27):
 			uc = uppercase_characters + str(folders) + '/'
