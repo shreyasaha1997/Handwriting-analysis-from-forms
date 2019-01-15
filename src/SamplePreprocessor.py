@@ -21,6 +21,7 @@ def preprocess(img, imgSize, dataAugmentation=False):
 	
 	# create target image and copy sample image into it
 	(wt, ht) = imgSize
+	print(img.shape)
 	(h, w) = img.shape
 	fx = w / wt
 	fy = h / ht

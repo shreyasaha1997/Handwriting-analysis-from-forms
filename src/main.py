@@ -131,16 +131,14 @@ def validate(model, loader):
 
 def infer(model, fnImg):
 	"recognize text in image provided by file path"
-	image = cv2.imread(fnImg, cv2.IMREAD_GRAYSCALE)
+	#image = cv2.imread(fnImg, cv2.IMREAD_GRAYSCALE)
+	cv2.cvtColor(fnImg, cv2.COLOR_BGR2GRAY)
 	# image = cv2.resize(image,(500,500))
-	cv2.imshow('asxsax',image)
-	cv2.waitKey(0)
 	img = preprocess(image, Model.imgSize)
-	cv2.imshow('asxsax', img)
-	cv2.waitKey(0)
 	batch = Batch(None, [img] * Model.batchSize)
 	recognized = model.inferBatch(batch)
 	print('Recognized:', '"' + recognized[0] + '"')
+	return recognized[0]
 
 def main():
 	"main function"
