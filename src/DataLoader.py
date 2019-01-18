@@ -35,39 +35,62 @@ class DataLoader:
 		self.batchSize = batchSize
 		self.imgSize = imgSize
 		self.samples = []
-
-		uppercase_characters = '../data/hsf_0/upper/'
-		lowercase_characters = '../data/hsf_0/lower/'
+		common_path = 'F:/NIST/by_field/'
 		chars = set()
-		numbers = '../data/hsf_0/digit/'
+		print('NIST database being stored')
+		for directories in range(0,7):
+			uppercase_characters = common_path + 'hsf_' + str(directories) + '/upper/'
+			lowercase_characters = common_path + 'hsf_' + str(directories) + '/lower/'
+			numbers = common_path + 'hsf_' + str(directories) + '/digit/'
+			print(directories)
+			for folders in range(1, 27):
+				uc = uppercase_characters + str(folders) + '/'
+				lc = lowercase_characters + str(folders) + '/'
+				for images in os.listdir(uc):
+					image_path = uc + images
+					if not os.path.getsize(image_path):
+						continue
+					chars = chars.union(chr(folders + 64))
+					self.samples.append(Sample(chr(folders + 64), image_path))
 
-		for folders in range(1, 27):
-			uc = uppercase_characters + str(folders) + '/'
-			lc = lowercase_characters + str(folders) + '/'
-			for images in os.listdir(uc):
-				image_path = uc + images
-				if not os.path.getsize(image_path):
-					continue
-				chars = chars.union(chr(folders + 64))
-				self.samples.append(Sample(chr(folders + 64), image_path))
+				for images in os.listdir(lc):
+					image_path = lc + images
+					if not os.path.getsize(image_path):
+						continue
+					chars = chars.union(chr(folders + 96))
+					self.samples.append(Sample(chr(folders + 96), image_path))
 
-			for images in os.listdir(lc):
-				image_path = lc + images
-				if not os.path.getsize(image_path):
-					continue
-				chars = chars.union(chr(folders + 96))
-				self.samples.append(Sample(chr(folders + 96), image_path))
-
-		for folders in range(0, 10):
-			npath = numbers + str(folders) + '/'
-			for images in os.listdir(npath):
-				image_path = npath + images
-				if not os.path.getsize(image_path):
-					continue
-				chars = chars.union(str(folders))
-				self.samples.append(Sample(str(folders), image_path))
+			for folders in range(0, 10):
+				npath = numbers + str(folders) + '/'
+				for images in os.listdir(npath):
+					image_path = npath + images
+					if not os.path.getsize(image_path):
+						continue
+					chars = chars.union(str(folders))
+					self.samples.append(Sample(str(folders), image_path))
 		print(self.samples[0].gtText)
 		print(self.samples[0].filePath)
+
+		random.shuffle(self.samples)
+		print('IAM')
+		f = open(filePath + 'words.txt')
+		for line in f:
+			if not line or line[0] == '#':
+				continue
+
+			lineSplit = line.strip().split(' ')
+			assert len(lineSplit) >= 9
+
+			fileNameSplit = lineSplit[0].split('-')
+			fileName = 'F:/' + 'words/' + fileNameSplit[0] + '/' + fileNameSplit[0] + '-' + fileNameSplit[1] + '/' + lineSplit[0] + '.png'
+
+			gtText = self.truncateLabel(' '.join(lineSplit[8:]), maxTextLen)
+			chars = chars.union(set(list(gtText)))
+
+			if not os.path.getsize(fileName):
+				continue
+
+			self.samples.append(Sample(gtText, fileName))
 
 		random.shuffle(self.samples)
 		# split into training and validation set: 95% - 5%

@@ -151,29 +151,29 @@ def main():
 
 
 	# train or validate on IAM dataset	
-	if args.train or args.validate:
+	# if args.train or args.validate:
 		# load training data, create TF model
-		loader = DataLoader(FilePaths.fnTrain, Model.batchSize, Model.imgSize, Model.maxTextLen)
+	loader = DataLoader(FilePaths.fnTrain, Model.batchSize, Model.imgSize, Model.maxTextLen)
 
 		# save characters of model for inference mode
-		open(FilePaths.fnCharList, 'w').write(str().join(loader.charList))
-		
+	open(FilePaths.fnCharList, 'w').write(str().join(loader.charList))
+
 		# save words contained in dataset into file
-		open(FilePaths.fnCorpus, 'w').write(str(' ').join(loader.trainWords + loader.validationWords))
+	open(FilePaths.fnCorpus, 'w').write(str(' ').join(loader.trainWords + loader.validationWords))
 
 		# execute training or validation
-		if args.train:
-			model = Model(loader.charList)
-			train(model, loader)
-		elif args.validate:
-			model = Model(loader.charList, mustRestore=True)
-			validate(model, loader)
+		# if args.train:
+	model = Model(loader.charList)
+	train(model, loader)
+	# elif args.validate:
+		# 	model = Model(loader.charList, mustRestore=True)
+		# 	validate(model, loader)
 
 	# infer text on test image
-	else:
-		print(open(FilePaths.fnAccuracy).read())
-		model = Model(open(FilePaths.fnCharList).read(), mustRestore=True)
-		infer(model, FilePaths.fnInfer)
+	# else:
+	# 	print(open(FilePaths.fnAccuracy).read())
+	# 	model = Model(open(FilePaths.fnCharList).read(), mustRestore=True)
+	# 	infer(model, FilePaths.fnInfer)
 
 
 if __name__ == '__main__':
