@@ -20,6 +20,6 @@ Download IAM dataset from 'http://www.fki.inf.unibe.ch/DBs/iamDB/data/words/word
 
 To train the model, go inside src folder and execute 'python main.py'.
 
-Crrently, the accuracy of the model is 86.043711%.
+Currently, the accuracy of the model is 86.043711%.
 
 We have used and edited the following reository https://github.com/githubharald/SimpleHTR.
